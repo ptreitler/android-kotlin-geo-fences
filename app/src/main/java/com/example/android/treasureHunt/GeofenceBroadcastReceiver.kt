@@ -37,7 +37,35 @@ import com.google.android.gms.location.GeofencingEvent
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        // TODO: Step 11 implement the onReceive method
+        if (intent.action == ACTION_GEOFENCE_EVENT) {
+            val geofencingEvent = GeofencingEvent.fromIntent(intent)
+
+            if (geofencingEvent.hasError()) {
+                Log.e(TAG, errorMessage(context, geofencingEvent.errorCode))
+                return
+            }
+
+            if (geofencingEvent.geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER)
+                onGeofenceEntered(context, geofencingEvent)
+        }
+    }
+
+    private fun onGeofenceEntered(context: Context, geofencingEvent: GeofencingEvent) {
+        Log.v(TAG, "Geofence entered")
+        val fenceId = geofencingEvent.triggeringGeofences.firstOrNull()?.requestId ?: run {
+            Log.e(TAG, "No geofence trigger found")
+            return
+        }
+
+        val fenceIndex = GeofencingConstants.LANDMARK_DATA.indexOfFirst { it.id == fenceId }
+
+        if (fenceIndex == -1) {
+            Log.e(TAG, "Unknown geofence: $fenceId")
+            return
+        }
+
+        ContextCompat.getSystemService(context, NotificationManager::class.java)
+            ?.sendGeofenceEnteredNotification(context, fenceIndex)
     }
 }
 
