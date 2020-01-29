@@ -15,12 +15,21 @@
  */
 
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 
+def properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+def homeLatitude = properties.getProperty("home.latitude")
+def homeLongitude = properties.getProperty("home.longitude")
+
 android {
+    defaultConfig {
+        buildConfigField "Double", "HOME_LATITUDE", homeLatitude
+        buildConfigField "Double", "HOME_LONGITUDE", homeLongitude
+    }
+
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.example.android.treasureHunt"

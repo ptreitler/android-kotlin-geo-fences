@@ -46,7 +46,6 @@ fun errorMessage(context: Context, errorCode: Int): String {
 data class LandmarkDataObject(val id: String, val hint: Int, val name: Int, val latLong: LatLng)
 
 internal object GeofencingConstants {
-
     /**
      * Used to set an expiration time for a geofence. After this amount of time, Location services
      * stops tracking the geofence. For this sample, geofences expire after one hour.
@@ -55,28 +54,39 @@ internal object GeofencingConstants {
 
     val LANDMARK_DATA = arrayOf(
         LandmarkDataObject(
+            "home",
+            R.string.home_hint,
+            R.string.home_location,
+            LatLng(BuildConfig.HOME_LATITUDE, BuildConfig.HOME_LONGITUDE)
+        ),
+
+        LandmarkDataObject(
             "golden_gate_bridge",
             R.string.golden_gate_bridge_hint,
             R.string.golden_gate_bridge_location,
-            LatLng(37.819927, -122.478256)),
+            LatLng(37.819927, -122.478256)
+        ),
 
         LandmarkDataObject(
             "ferry_building",
             R.string.ferry_building_hint,
             R.string.ferry_building_location,
-            LatLng(37.795490, -122.394276)),
+            LatLng(37.795490, -122.394276)
+        ),
 
         LandmarkDataObject(
             "pier_39",
             R.string.pier_39_hint,
             R.string.pier_39_location,
-            LatLng(37.808674, -122.409821)),
+            LatLng(37.808674, -122.409821)
+        ),
 
         LandmarkDataObject(
-           "union_square",
+            "union_square",
             R.string.union_square_hint,
             R.string.union_square_location,
-            LatLng(37.788151, -122.407570))
+            LatLng(37.788151, -122.407570)
+        )
     )
 
     val NUM_LANDMARKS = LANDMARK_DATA.size
